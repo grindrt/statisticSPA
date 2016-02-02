@@ -1,0 +1,33 @@
+﻿@{
+  ViewBag.Title = "SPA";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<body ng-app="StatApp">
+  <div>
+    <div>
+      <div>
+        <table cellpadding="5" cellspacing="6" width="100%" style="background-color:whitesmoke; border:solid 4px green;">
+          <tr>
+            <td style="border: solid 1px gray; width:170px; text-align:center;"><a href="#/showClients"> Show All Clients </a></td>
+            <td style="border: solid 1px gray; width:170px; text-align:center;"><a href="#/showOrders"> Show All Clients </a></td>
+
+          </tr>
+        </table>
+      </div>
+      <div>
+        <div ng-view></div>
+</div>
+    </div>
+  </div>
+
+</body>  
+
+@section scripts{
+  <script type="text/javascript" src="@Url.Content("~/Scripts/angular.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/Scripts/angular-route.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/Scripts/app/module.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/Scripts/app/client-controller.js")"></script>
+}
+  
