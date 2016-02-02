@@ -1,5 +1,5 @@
 ﻿module
-  .controller('ClientCtrl', function ($scope, $http, $location) {
+  .controller('clientController', function ($scope, $http, $location) {
     getClients();
 
     function getClients() {

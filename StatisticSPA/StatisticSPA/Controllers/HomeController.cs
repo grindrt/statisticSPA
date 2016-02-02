@@ -21,5 +21,10 @@ namespace StatisticSPA.Controllers
     {
       return PartialView();
     }
+
+    public ActionResult ShowChart()
+    {
+      return PartialView();
+    }
   }
 }
