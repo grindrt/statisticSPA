@@ -26,6 +26,7 @@ namespace StatisticSPA.Models
         {
            // throw new UnintentionalCodeFirstException();
           modelBuilder.Entity<Client>().HasMany(x => x.Group).WithMany(x => x.Client);
+          modelBuilder.Entity<Group>().HasMany(x => x.Client).WithMany(x => x.Group);
         }
     
         public virtual DbSet<Client> Client { get; set; }

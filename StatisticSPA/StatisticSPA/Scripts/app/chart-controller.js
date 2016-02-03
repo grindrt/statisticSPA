@@ -29,7 +29,7 @@
           columnData.lines.push(line);
         }
 
-        $scope.columnData = columnData;
+        //$scope.columnData = columnData;
 
         chart = {
           chart: {
@@ -62,7 +62,7 @@
           series: [
             {
               name: "Groups",
-              data: $scope.columnData.lines
+              data: columnData.lines // $scope.columnData.lines
             }
           ]
         };

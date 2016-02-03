@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StatisticModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar(max)" />
+    <Property Name="LastName" Type="varchar(max)" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="BirthDate" Type="smalldatetime" />
+    <Property Name="City" Type="varchar(max)" />
+    <Property Name="Gender" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Statistic.dbo.ClientGroups' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ClientGroups">
+    <Key>
+      <PropertyRef Name="GroupId" />
+      <PropertyRef Name="ClientId" />
+    </Key>
+    <Property Name="GroupId" Type="int" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar(max)" />
+    <Property Name="Color" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ClientGroups_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="ClientGroups" Type="Self.ClientGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientGroups">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientGroups_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="ClientGroups" Type="Self.ClientGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientGroups">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GetClientsCountPerGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="StatisticModelStoreContainer">
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientGroups" EntityType="Self.ClientGroups" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ClientGroups].[GroupId] AS [GroupId], 
+    [ClientGroups].[ClientId] AS [ClientId]
+    FROM [dbo].[ClientGroups] AS [ClientGroups]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ClientGroups_Client" Association="Self.FK_ClientGroups_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ClientGroups" EntitySet="ClientGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientGroups_Group" Association="Self.FK_ClientGroups_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="ClientGroups" EntitySet="ClientGroups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

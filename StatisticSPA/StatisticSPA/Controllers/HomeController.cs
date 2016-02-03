@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace StatisticSPA.Controllers
 {
@@ -22,7 +19,12 @@ namespace StatisticSPA.Controllers
       return PartialView();
     }
 
-    public ActionResult ShowChart()
+    public ActionResult ShowGroups()
+    {
+      return PartialView();
+    }
+
+    public ActionResult ShowReports()
     {
       return PartialView();
     }

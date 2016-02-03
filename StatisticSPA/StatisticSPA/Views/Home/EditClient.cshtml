@@ -1,37 +1,58 @@
-﻿<table><tr><td height="10px"></td></tr></table>
+﻿<table>
+  <thead>
+    <th colspan="2" style="text-align: center">Edit Client Information</th>
+  </thead>
 
-<table cellpadding="4" cellspacing="4" width="70%" align="center" style="background-color: skyblue; border:solid 2px red; padding-top:20px;">
-  <tr><td colspan="3" style="background-color:gray; font-size:18pt; font-weight:bold; height:30px; text-align:center;">Edit Client Information</td></tr>
+  <tbody>
   <tr>
+    <td style="text-align: right; width: 50%">Client ID</td>
+    <td style="width:50%"> {{client.id}} </td>
+  </tr>
 
-    <td style="text-align:right;">Client ID</td>
-    <td><input type="text" ng-model="client.id" />  </td>
-  </tr>
   <tr>
+    <td style="text-align: right; width: 50%">First Name</td>
+    <td style="width:50%"><input type="text" ng-model="client.firstName" /> </td>
+  </tr>
 
-    <td style="text-align:right;">First Name</td>
-    <td><input type="text" ng-model="client.firstName" />  </td>
-  </tr>
   <tr>
-    <td style="text-align:right;">Last name</td>
-    <td><input type="text" ng-model="client.lastname" />  </td>
+    <td style="text-align: right; width: 50%">Last name</td>
+    <td style="width:50%"><input type="text" ng-model="client.lastName" /> </td>
   </tr>
+
   <tr>
-    <td style="text-align:right;">Email</td>
-    <td><input type="text" ng-model="client.email" />  </td>
+    <td style="text-align: right; width: 50%">Email</td>
+    <td style="width:50%"><input type="text" ng-model="client.email" /> </td>
   </tr>
+
   <tr>
-    <td style="text-align:right;">Birth date</td>
-    <td><input type="text" ng-model="client.birthDate" />  </td>
+    <td style="text-align: right; width: 50%">Birth date</td>
+    <td style="width:50%"><input type="text" ng-model="client.birthDate" /> </td>
   </tr>
+
   <tr>
-    <td style="text-align:right;">City</td>
-    <td><input type="text" ng-model="client.city" />  </td>
+    <td style="text-align: right; width: 50%">City</td>
+    <td style="width:50%"><input type="text" ng-model="client.city" /> </td>
   </tr>
+
   <tr>
-    <td style="text-align:right;">Gender</td>
-    <td><input type="text" ng-model="client.gender" />  </td>
+    <td style="text-align: right; width: 50%">Gender</td>
+    <td style="width: 50%"><input type="text" ng-model="client.gender"/> </td>
   </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      <div align="center" data-ng-repeat="Group in Groups">
+        <div align="left">
+          <label class="checkbox" for="{{group.id}}">
+            <input id="groupCheckBox" type="checkbox" ng-model="selectedGroups.ids[Group.id]" id="{{group.id}}"/>
+            {{Group.title}}
+          </label>
+        </div>
+      </div>
+    </td>
+  </tr>
+
   <tr>
     <td></td>
     <td>
@@ -41,4 +62,5 @@
     </td>
   </tr>
 
+  </tbody>
 </table>  

@@ -1,0 +1,30 @@
+﻿<table><thead><th><a href="#/addClient">Add group</a></th></thead></table>
+<table>
+  <thead>
+    <tr>
+      <th>Group ID</th>
+      <th>Title</th>
+      <th>Color</th>
+      <th>Clients</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="repeater" data-ng-repeat="Group in Groups">
+      <td>{{Group.id}}</td>
+      <td><b>{{Group.title}}</b></td>
+      <td style="background-color: {{Group.color}}">{{Group.color}}</td>
+      <td>
+        <table>
+          <tr data-ng-repeat="Clint in Group.client">
+            <td class="repeater-cell">{{Clint.lastName}} {{Clint.firstName}}</td>
+          </tr>
+        </table>
+      </td>
+      <td><a ng-click="editGroup(Group.id)">Edit</a></td>
+      <td><a ng-click="deleteGroup(Group.id)">Delete</a></td>
+    </tr>
+  </tbody>
+</table>
+

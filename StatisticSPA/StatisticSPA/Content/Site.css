@@ -16,40 +16,27 @@ textarea {
     max-width: 280px;
 }
 
-/* Set padding to display errors that occur during databinding */
-.padding-error {
-    padding-top: 20px;
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
+.repeater-cell {
+    text-align: left;
+    padding: 8px;
 }
 
-.field-validation-valid {
-    display: none;
+th {
+    text-align: left;
+    padding: 8px;
+    background-color: green;
+    color: white;
 }
 
-input.input-validation-error {
-    border: 1px solid #b94a48;
+td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
-
-.validation-summary-errors,
-.validationMessage {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-@media only screen and (max-width: 767px) {
-    .nofloat {
-        float: none;
-        padding: 10px 15px;
-    }
-}
+.repeater:nth-child(even){background-color: #f2f2f2}

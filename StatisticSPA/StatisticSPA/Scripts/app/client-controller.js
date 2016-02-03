@@ -1,15 +1,32 @@
 ﻿module
-  .controller('clientController', function ($scope, $http, $location) {
-    getClients();
+  .controller('clientController', function ($scope, $http, $location, shareDataService) {
+    if (shareDataService.get()) {
+      getClientForEdit();
+    } else {
+       getClients();
+    }
 
     function getClients() {
-      //return $http.get('/api/clients');
         $http.get('/api/clients').success(function (data, status, headers, config) {
 
         $scope.Clients = data;
 
       }).error(function (data, status, heades, config) {
         $scope.title = 'Something going wrong';
+      });
+    }
+
+    function getClientForEdit() {
+      $http.get('/api/groups').success(function (data) {
+        $scope.client = shareDataService.get();
+        $scope.Groups = data;
+        $scope.selectedGroups = { ids: {} };
+
+        for (var i = 0; i < $scope.client.group.length; i++) {
+          var groupId = $scope.client.group[i].id;
+          $scope.selectedGroups.ids[groupId] = true;
+        }
+        shareDataService.set(null);
       });
     }
 
@@ -23,11 +40,11 @@
     }
 
     $scope.editClient = function(id) {
-      $location.path("/editClient");
 
       $http.get('/api/clients/' + id).success(function (data, status, headers, config) {
 
-        $scope.client = data;
+        shareDataService.set(data);
+        $location.path("/editClient");
 
       }).error(function (data, status, heades, config) {
         $scope.title = 'Something going wrong';
@@ -36,5 +53,20 @@
 
     $scope.save= function() {
       $scope.error = "AAA";
+
+      var groupIds = $scope.selectedGroups.ids;
+      var client = $scope.client;
+      client.group = [];
+
+      for (var i = 0; i < groupIds.length; i++) {
+        client.group.push({
+          id: groupIds[i]
+        });
+      }
+
+      $http.post('api/clients', client).then(function() {
+        $location.path("/showClients");
+      });
+
     }
   })

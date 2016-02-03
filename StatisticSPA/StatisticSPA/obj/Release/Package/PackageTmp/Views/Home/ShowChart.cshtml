@@ -1,0 +1,15 @@
+﻿@*<hc-pie-char title="usage" data="pieData"></hc-pie-char>*@
+
+<div>
+
+  <div>
+    <form>
+      <label for="chartType">Choose chart type: </label>
+      <select name="chartType" id="chartTypeId" ng-model="chartTypeData.chartTypeSelect" ng-change="chartTypeSelected()">
+        <option ng-repeat="type in chartTypeData.chartTypes" value="{{type.id}}">{{type.title}}</option>
+      </select>
+    </form>
+  </div>
+
+  <div id="chartContainer"></div>
+</div>
