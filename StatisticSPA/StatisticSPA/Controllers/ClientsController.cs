@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Description;
+using StatisticSPA.DAL;
 using StatisticSPA.Models;
 
 namespace StatisticSPA.Controllers
 {
   public class ClientsController : ApiController
   {
-    private readonly StatisticContext _db = new StatisticContext();
+    readonly StatisticContext _db = new StatisticContext();
 
     // GET api/Client
     public IEnumerable<Client> GetClients()
     {
-      return _db.Client; //.Where(c => c.Group.Any(g => g.Id == c.Id));
+      return _db.Client;
     }
 
-    // GET api/Client/5
+    // GET api/Clients/5
     public Client GetClient(int id)
     {
-      Client client = _db.Client.Find(id);
+      var client = _db.Client.Find(id);
       if (client == null)
       {
         throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -34,87 +33,133 @@ namespace StatisticSPA.Controllers
       return client;
     }
 
-    // PUT api/Client/5
-    public HttpResponseMessage PutClient(int id, Client client)
+    // PUT api/Clients
+    public HttpResponseMessage PutClient(Client client)
+    {
+      if (!ModelState.IsValid) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+      using (var context = new StatisticContext())
+      {
+        var addedGroups = client.Groups.Select(x => x.Id).ToList();
+        client.Groups.Clear();
+
+        foreach (var @group in
+          from @group in context.Group
+          from added in addedGroups.Where(added => @group.Id == added)
+          select @group)
+        {
+          client.Groups.Add(@group);
+        }
+
+        try
+        {
+          context.Client.Add(client);
+          context.SaveChanges();
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+          return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        }
+      }
+
+      HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, client);
+      response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = client.Id }));
+      return response;
+    }
+
+    // POST api/Clients/5
+    public HttpResponseMessage PostClient(Client client)
     {
       if (!ModelState.IsValid)
       {
         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
       }
 
-      if (id != client.Id)
+      if (client == null || client.Id <= 0)
       {
         return Request.CreateResponse(HttpStatusCode.BadRequest);
       }
 
-      _db.Entry(client).State = EntityState.Modified;
+      var addedGroups = client.Groups.Select(x => x.Id).ToList();
+      client.Groups.Clear();
 
-      try
+      var id = client.Id;
+      using (var context = new StatisticContext())
       {
-        _db.SaveChanges();
+        var dbClient = context.Client.Include(x => x.Groups).FirstOrDefault(x => x.Id == id && x.Groups.Any());
+        if (dbClient != null)
+        {
+          dbClient.Groups.Clear();
+          try
+          {
+            context.SaveChanges();
+          }
+          catch (DbUpdateConcurrencyException ex)
+          {
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+          }
+        }
       }
-      catch (DbUpdateConcurrencyException ex)
+
+      using (var context = new StatisticContext())
       {
-        return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        var dbClient = context.Client.Include(x => x.Groups).FirstOrDefault(x => x.Id == client.Id);
+        if (dbClient == null)
+        {
+          return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        foreach (var @group in
+          from @group in context.Group
+          from added in addedGroups.Where(added => @group.Id == added)
+          select @group)
+        {
+          dbClient.Groups.Add(@group);
+        }
+
+        dbClient.FirstName = client.FirstName;
+        dbClient.LastName = client.LastName;
+        dbClient.Email = client.Email;
+        dbClient.BirthDate = client.BirthDate;
+        dbClient.City = client.City;
+        dbClient.Gender = client.Gender;
+
+        try
+        {
+          context.SaveChanges();
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+          return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        }
       }
 
       return Request.CreateResponse(HttpStatusCode.OK);
     }
 
-    // POST api/Client
-    public HttpResponseMessage PostClient(Client client)
-    {
-      if (ModelState.IsValid)
-      {
-        _db.Client.Add(client);
-        _db.SaveChanges();
-
-        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, client);
-        response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = client.Id }));
-        return response;
-      }
-      else
-      {
-        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-      }
-    }
-
-    // DELETE api/Client/5
+    // DELETE api/Clients/5
     public HttpResponseMessage DeleteClient(int id)
     {
-      Client client = _db.Client.Find(id);
-      if (client == null)
+      using (var context = new StatisticContext())
       {
-        return Request.CreateResponse(HttpStatusCode.NotFound);
+        Client client = context.Client.Find(id);
+        if (client == null)
+        {
+          return Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+
+        context.Client.Remove(client);
+
+        try
+        {
+          context.SaveChanges();
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+          return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+        }
+
+        return Request.CreateResponse(HttpStatusCode.OK, client);
       }
-
-      _db.Client.Remove(client);
-
-      try
-      {
-        _db.SaveChanges();
-      }
-      catch (DbUpdateConcurrencyException ex)
-      {
-        return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
-      }
-
-      return Request.CreateResponse(HttpStatusCode.OK, client);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing)
-      {
-        _db.Dispose();
-      }
-
-      base.Dispose(disposing);
-    }
-
-    private bool ClientExists(int id)
-    {
-      return _db.Client.Count(e => e.Id == id) > 0;
     }
   }
 }

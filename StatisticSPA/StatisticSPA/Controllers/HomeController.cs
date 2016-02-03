@@ -19,7 +19,22 @@ namespace StatisticSPA.Controllers
       return PartialView();
     }
 
+    public ActionResult AddClient()
+    {
+      return PartialView("EditClient");
+    }
+
     public ActionResult ShowGroups()
+    {
+      return PartialView();
+    }
+
+    public ActionResult AddGroup()
+    {
+      return PartialView("EditGroup");
+    }
+
+    public ActionResult EditGroup()
     {
       return PartialView();
     }

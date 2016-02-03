@@ -3,7 +3,8 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+
 <body ng-app="StatApp">
 <div>
   <div>
@@ -26,9 +27,11 @@
 @section scripts{
   <script type="text/javascript" src="@Url.Content("~/Scripts/angular.js")"></script>
   <script type="text/javascript" src="@Url.Content("~/Scripts/angular-route.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.minicolors.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/angular-minicolors.js")"></script>
   <script type="text/javascript" src="@Url.Content("~/Scripts/app/module.js")"></script>
   <script type="text/javascript" src="@Url.Content("~/Scripts/app/client-controller.js")"></script>
   <script type="text/javascript" src="@Url.Content("~/Scripts/app/group-controller.js")"></script>
-  <script type="text/javascript" src="@Url.Content("~/Scripts/app/chart-controller.js")"></script>
+  <script type="text/javascript" src="@Url.Content("~/Scripts/app/report-controller.js")"></script>
 }
   

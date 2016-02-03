@@ -66,8 +66,6 @@ C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSP
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\StatisticSPA.pdb
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\Antlr3.Runtime.dll
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\DotNet.Highcharts.dll
-C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\EntityFramework.dll
-C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\EntityFramework.SqlServer.dll
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Andrei_Kasak@epam.com\Documents\Visual Studio 2012\Projects\StatisticSPA\StatisticSPA\StatisticSPA\bin\Microsoft.AspNet.Identity.Owin.dll

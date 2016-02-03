@@ -1,4 +1,4 @@
-﻿<table><thead><th><a href="#/addClient">Add group</a></th></thead></table>
+﻿<table><thead><th><a href="" ng-click="addGroup()">Add group</a></th></thead></table>
 <table>
   <thead>
     <tr>
@@ -17,7 +17,7 @@
       <td style="background-color: {{Group.color}}">{{Group.color}}</td>
       <td>
         <table>
-          <tr data-ng-repeat="Clint in Group.client">
+          <tr data-ng-repeat="Clint in Group.clients">
             <td class="repeater-cell">{{Clint.lastName}} {{Clint.firstName}}</td>
           </tr>
         </table>

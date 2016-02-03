@@ -1,0 +1,24 @@
+{
+  "name": "spa",
+  "description": "StatisticSPA",
+  "main": "index.js",
+  "authors": [
+    "A.Kasak"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/grindrt/statisticSPA",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

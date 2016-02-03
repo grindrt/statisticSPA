@@ -1,0 +1,22 @@
+{
+  "name": "spa",
+  "version": "1.0.0",
+  "description": "StatisticSPA ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grindrt/statisticSPA.git"
+  },
+  "author": "A.Kasak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grindrt/statisticSPA/issues"
+  },
+  "homepage": "https://github.com/grindrt/statisticSPA#readme",
+  "dependencies": {
+    "angularjs-color-picker": "^0.8.1"
+  }
+}

@@ -41,7 +41,8 @@ namespace StatisticSPA
 
       bundles.Add(new StyleBundle("~/Content/css").Include(
            "~/Content/bootstrap.css",
-           "~/Content/Site.css"));
+           "~/Content/Site.css",
+           "~/node_modules/angularjs-color-picker/angularjs-color-picker.css"));
 
       bundles.Add(new ScriptBundle("~/bundles/hightchart").Include(
         "~/Scripts/Highcharts-4.0.1/js/highcharts.js"

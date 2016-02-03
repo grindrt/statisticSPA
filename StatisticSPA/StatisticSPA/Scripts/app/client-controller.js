@@ -1,72 +1,88 @@
-﻿module
-  .controller('clientController', function ($scope, $http, $location, shareDataService) {
-    if (shareDataService.get()) {
-      getClientForEdit();
-    } else {
-       getClients();
-    }
+﻿module.controller('clientController', function($scope, $http, $location, shareDataService) {
+  $http.get('/api/clients').success(function(data) {
+    $scope.Clients = data;
+  });
 
-    function getClients() {
-        $http.get('/api/clients').success(function (data, status, headers, config) {
+  $scope.addClient = function() {
+    $location.path("/addClient");
+  }
 
+  $scope.deleteClient = function(id) {
+    $http.delete('/api/clients/' + id).success(function() {
+      $http.get('/api/clients').success(function (data) {
         $scope.Clients = data;
-
-      }).error(function (data, status, heades, config) {
-        $scope.title = 'Something going wrong';
       });
+    });
+  }
+
+  $scope.editClient = function(id) {
+    shareDataService.set(id);
+    $location.path("/editClient");
+  }
+});
+
+module.controller('addClientController', function($scope, $http, $location) {
+  $scope.showId = false;
+  $scope.client = { firstName: null, lastName: null, email: null, birthDate: null, city: null, gender: null, groups: null }
+
+  $http.get('/api/groups').success(function(data) {
+    $scope.Groups = data;
+    $scope.selectedGroups = { ids: {} };
+  });
+
+  $scope.save = function() {
+    var groupIds = $scope.selectedGroups.ids;
+    var client = $scope.client;
+    client.groups = [];
+
+    for (var prop in groupIds) {
+      if (groupIds.hasOwnProperty(prop)) {
+        client.groups.push({ id: prop });
+      }
     }
 
-    function getClientForEdit() {
-      $http.get('/api/groups').success(function (data) {
-        $scope.client = shareDataService.get();
-        $scope.Groups = data;
-        $scope.selectedGroups = { ids: {} };
+    $http.put('api/clients/', client).then(function() {
+      $location.path("/showClients");
+    }, function(errorResult) {
+      $scope.error = errorResult.statusText;
+    });
+  }
+});
 
-        for (var i = 0; i < $scope.client.group.length; i++) {
-          var groupId = $scope.client.group[i].id;
-          $scope.selectedGroups.ids[groupId] = true;
-        }
-        shareDataService.set(null);
-      });
-    }
+module.controller('editClientController', function ($scope, $http, $location, shareDataService) {
+  $scope.showId = true;
 
-    $scope.addClient = function(option) {
-      $http.post('/api/clients', { 'id': option.id }).success(function(data, status, headers, config) {
+  $http.get('/api/clients/' + shareDataService.get()).success(function(client) {
+    $scope.client = client;
+    $http.get('/api/groups').success(function(groups) {
+      $scope.Groups = groups;
+      $scope.selectedGroups = { ids: {} };
 
-        })
-        .error(function (data, status, headers, config) {
-          $scope.title = 'Something going wrong';
-        });
-    }
-
-    $scope.editClient = function(id) {
-
-      $http.get('/api/clients/' + id).success(function (data, status, headers, config) {
-
-        shareDataService.set(data);
-        $location.path("/editClient");
-
-      }).error(function (data, status, heades, config) {
-        $scope.title = 'Something going wrong';
-      });
-    }
-
-    $scope.save= function() {
-      $scope.error = "AAA";
-
-      var groupIds = $scope.selectedGroups.ids;
-      var client = $scope.client;
-      client.group = [];
-
-      for (var i = 0; i < groupIds.length; i++) {
-        client.group.push({
-          id: groupIds[i]
-        });
+      for (var i = 0; i < $scope.client.groups.length; i++) {
+        var groupId = $scope.client.groups[i].id;
+        $scope.selectedGroups.ids[groupId] = true;
       }
 
-      $http.post('api/clients', client).then(function() {
-        $location.path("/showClients");
-      });
+      shareDataService.set(null);
+    });
+  });
 
+  $scope.save = function() {
+    var groupIds = $scope.selectedGroups.ids;
+    var client = $scope.client;
+    client.groups = [];
+
+    for (var prop in groupIds) {
+      if (groupIds.hasOwnProperty(prop)) {
+        client.groups.push({ id: prop });
+      }
     }
-  })
+
+    $http.post('api/clients/', client).then(function() {
+      $location.path("/showClients");
+    }, function(errorResult) {
+      $scope.error = errorResult.statusText;
+    });
+
+  }
+});

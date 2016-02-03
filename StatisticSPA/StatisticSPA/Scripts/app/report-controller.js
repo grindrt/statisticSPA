@@ -22,7 +22,7 @@
 
           var line = {
             name: data[i].title,
-            y: data[i].client.length,
+            y: data[i].clients.length,
             color: data[i].color
           }
 
@@ -75,7 +75,7 @@
 
           var line = {
             name: data[i].title,
-            y: data[i].client.length,
+            y: data[i].clients.length,
             color: data[i].color
           }
 

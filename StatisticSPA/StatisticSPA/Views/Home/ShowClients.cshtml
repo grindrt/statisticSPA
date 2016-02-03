@@ -1,4 +1,4 @@
-﻿<table><thead><th><a href="#/addClient">Add client</a></th></thead></table>
+﻿<table><thead><th><a href="" ng-click="addClient()">Add client</a></th></thead></table>
 <table>
   <thead>
     <tr>
@@ -25,7 +25,7 @@
       <td>{{Client.gender}}</td>
       <td>
         <table>
-          <tr data-ng-repeat="Group in Client.group">
+          <tr data-ng-repeat="Group in Client.groups">
             <td class="repeater-cell">{{Group.title}}</td>
           </tr>
         </table>

@@ -1,0 +1,49 @@
+﻿<table>
+  <thead><th colspan="2" style="text-align: center">Edit Group Information</th></thead>
+
+  <tbody>
+    <tr ng-show="showId">
+      <td style="text-align: right; width: 50%">Group ID</td>
+      <td style="width:50%"> {{group.id}} </td>
+    </tr>
+
+    <tr>
+      <td style="text-align: right; width: 50%">Title</td>
+      <td style="width:50%"><input type="text" ng-model="group.title" /> </td>
+    </tr>
+
+    <tr>
+      <td style="text-align: right; width: 50%">Color</td>
+      <td style="width: 50%">
+        <input minicolors="groupColor" id="color-input"
+               class="form-control"
+               type="text"
+               ng-model="group.color" />
+      </td>
+    </tr>
+    
+    <tr>
+      <td></td>
+      <td>
+        <div align="center" data-ng-repeat="Client in Clients">
+          <div align="left">
+            <label class="checkbox" for="{{client.id}}">
+              <input id="groupCheckBox" type="checkbox" ng-model="selectedClients.ids[Client.id]" id="{{client.id}}" />
+              {{Client.lastName}} {{Client.firstName}}
+            </label>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>
+        <input type="button" value="Save" ng-click="save()" />
+        <br />
+        <div>{{error}}</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
